@@ -219,10 +219,10 @@ spec:
         - name: token-keys
           secret:
             {{- if not .Values.auth.authentication.jwt.usingSecretKey }}
-            secretName: "{{ .Release.Name }}-token-asymmetric-key"
+            secretName: "{{ template "pulsar.fullname" . }}-token-asymmetric-key"
             {{- end}}
             {{- if .Values.auth.authentication.jwt.usingSecretKey }}
-            secretName: "{{ .Release.Name }}-token-symmetric-key"
+            secretName: "{{ template "pulsar.fullname" . }}-token-symmetric-key"
             {{- end}}
             items:
               {{- if .Values.auth.authentication.jwt.usingSecretKey }}
@@ -234,7 +234,7 @@ spec:
               {{- end}}
         - name: proxy-token
           secret:
-            secretName: "{{ .Release.Name }}-token-{{ .Values.auth.superUsers.proxy }}"
+            secretName: "{{ template "pulsar.fullname" . }}-token-{{ .Values.auth.superUsers.proxy }}"
             items:
               - key: TOKEN
                 path: proxy/token
@@ -243,13 +243,13 @@ spec:
         {{- if .Values.tls.proxy.enabled }}
         - name: ca
           secret:
-            secretName: "{{ .Release.Name }}-ca-tls"
+            secretName: "{{ template "pulsar.fullname" . }}-ca-tls"
             items:
               - key: ca.crt
                 path: ca.crt
         - name: proxy-certs
           secret:
-            secretName: "{{ .Release.Name }}-{{ .Values.tls.proxy.cert_name }}"
+            secretName: "{{ template "pulsar.fullname" . }}-{{ .Values.tls.proxy.cert_name }}"
             items:
               - key: tls.crt
                 path: tls.crt

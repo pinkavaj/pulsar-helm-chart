@@ -90,7 +90,7 @@ spec:
       {{- if eq .Values.auth.authentication.provider "jwt" }}
       - name: client-token
         secret:
-          secretName: "{{ .Release.Name }}-token-{{ .Values.auth.superUsers.client }}"
+          secretName: "{{ template "pulsar.fullname" . }}-token-{{ .Values.auth.superUsers.client }}"
           items:
             - key: TOKEN
               path: client/token
@@ -99,7 +99,7 @@ spec:
       {{- if and .Values.tls.enabled (or .Values.tls.broker.enabled .Values.tls.proxy.enabled) }}
       - name: proxy-ca
         secret:
-          secretName: "{{ .Release.Name }}-ca-tls"
+          secretName: "{{ template "pulsar.fullname" . }}-ca-tls"
           items:
             - key: ca.crt
               path: ca.crt

@@ -231,10 +231,10 @@ spec:
       - name: token-keys
         secret:
           {{- if not .Values.auth.authentication.jwt.usingSecretKey }}
-          secretName: "{{ .Release.Name }}-token-asymmetric-key"
+          secretName: "{{ template "pulsar.fullname" . }}-token-asymmetric-key"
           {{- end}}
           {{- if .Values.auth.authentication.jwt.usingSecretKey }}
-          secretName: "{{ .Release.Name }}-token-symmetric-key"
+          secretName: "{{ template "pulsar.fullname" . }}-token-symmetric-key"
           {{- end}}
           items:
             {{- if .Values.auth.authentication.jwt.usingSecretKey }}
@@ -246,7 +246,7 @@ spec:
             {{- end}}
       - name: broker-token
         secret:
-          secretName: "{{ .Release.Name }}-token-{{ .Values.auth.superUsers.broker }}"
+          secretName: "{{ template "pulsar.fullname" . }}-token-{{ .Values.auth.superUsers.broker }}"
           items:
             - key: TOKEN
               path: broker/token

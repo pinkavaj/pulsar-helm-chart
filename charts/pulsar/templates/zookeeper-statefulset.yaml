@@ -181,7 +181,7 @@ spec:
       {{- if and .Values.tls.enabled .Values.tls.zookeeper.enabled }}
       - name: zookeeper-certs
         secret:
-          secretName: "{{ .Release.Name }}-{{ .Values.tls.zookeeper.cert_name }}"
+          secretName: "{{ template "pulsar.fullname" . }}-{{ .Values.tls.zookeeper.cert_name }}"
           items:
             - key: tls.crt
               path: tls.crt
@@ -189,7 +189,7 @@ spec:
               path: tls.key
       - name: ca
         secret:
-          secretName: "{{ .Release.Name }}-ca-tls"
+          secretName: "{{ template "pulsar.fullname" . }}-ca-tls"
           items:
             - key: ca.crt
               path: ca.crt
